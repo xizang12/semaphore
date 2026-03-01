@@ -35,11 +35,13 @@
       ignore_errors: true # Ignore errors because grep will return exit code 1 if no kernel packages are listed
       changed_when: kernel_update_check.rc == 0
 
-    - name: Reboot the server if a new kernel was installed
-      ansible.builtin.reboot:
-        reboot_timeout: 600
-        msg: "Reboot initiated by Ansible due to kernel updates"
-      when: kernel_update_check.rc == 0
+    - name: Send Pushover notification
+      community.general.pushover:
+        user_key: 'abttthxtsupgm6ts2hh8ia7j114dpr'
+        api_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
+        msg: "Host {{ ansible_hostname }} requires a reboot."
+        title: "Reboot Required"
+      when: reboot_required_file.stat.exists
 
 # - name: Update local machine
  # hosts: local
