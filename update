@@ -8,7 +8,7 @@
         update_cache: yes
         cache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
         upgrade: yes
-     - name: Reboot remote host if necessary
+    - name: Reboot remote host if necessary
       ansible.builtin.reboot:
         reboot_timeout: 600
       # The reboot module can automatically detect if a reboot is required
