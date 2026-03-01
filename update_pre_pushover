@@ -1,0 +1,48 @@
+---
+- name: Update all packages on Debian/Ubuntu hosts
+  hosts: debian_hosts
+  become: true  # Required to run with root privileges
+  tasks:
+    - name: Update apt package cache and upgrade all installed packages
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
+        upgrade: yes
+    - name: Reboot remote host if necessary
+      ansible.builtin.reboot:
+        reboot_timeout: 600
+      # The reboot module can automatically detect if a reboot is required
+
+- name: Update all packages on Alpine Linux hosts
+  hosts: alpine_hosts
+  become: true  # Required to run with root privileges
+  tasks:
+    - name: Update apk package cache and upgrade all installed packages
+      community.general.apk:
+        update_cache: yes
+        upgrade: yes
+    - name: Check if kernel update requires a reboot
+      ansible.builtin.command:
+        cmd: "set -o pipefail; apk -u list | grep '^linux-'"
+      register: kernel_update_check
+      ignore_errors: true # Ignore errors because grep will return exit code 1 if no kernel packages are listed
+      changed_when: kernel_update_check.rc == 0
+
+    - name: Reboot the server if a new kernel was installed
+      ansible.builtin.reboot:
+        reboot_timeout: 600
+        msg: "Reboot initiated by Ansible due to kernel updates"
+      when: kernel_update_check.rc == 0
+
+# - name: Update local machine
+ # hosts: local
+ # connection: local
+ # become: true # Needed for administrative privileges (sudo)
+ # tasks:
+   # - name: Install all available updates on localhost
+      # Use the appropriate module for your local OS (apt, dnf, yum, win_updates, etc.)
+     # ansible.builtin.apt:
+       # update_cache: yes
+       # cache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
+       # upgrade: yes
+        
