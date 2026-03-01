@@ -36,14 +36,13 @@
 
 - name: Update local machine
   hosts: local
-  delegate_to: localhost
-  # connection: local
+  connection: local
   become: true # Needed for administrative privileges (sudo)
   tasks:
     - name: Install all available updates on localhost
       # Use the appropriate module for your local OS (apt, dnf, yum, win_updates, etc.)
       ansible.builtin.apt:
-        update_cache: true
+        update_cache: yes
         cache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
         upgrade: yes
         
