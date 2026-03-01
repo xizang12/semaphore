@@ -41,7 +41,7 @@
         api_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
         msg: "Host {{ ansible_hostname }} requires a reboot."
         title: "Reboot Required"
-      when: running_kernel.stdout not in installed_kernel.stdout
+      when: kernel_update_check.rc == 0
 
 # - name: Update local machine
  # hosts: local
