@@ -44,6 +44,7 @@
       ansible.builtin.apt:
         name: "*"
         state: latest
-        update_cache: truecache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
-        upgrade: yes
+          update_cache: true
+          cache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
+          upgrade: yes
         
