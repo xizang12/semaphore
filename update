@@ -8,10 +8,17 @@
         update_cache: yes
         cache_valid_time: 3600  # Update cache if older than 1 hour (3600s)
         upgrade: yes
-    - name: Reboot remote host if necessary
-      ansible.builtin.reboot:
-        reboot_timeout: 600
-      # The reboot module can automatically detect if a reboot is required
+    - name: Check if reboot is required (Debian/Ubuntu)
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+    - name: Send Pushover notification
+      community.general.pushover:
+        user_key: 'abttthxtsupgm6ts2hh8ia7j114dpr'
+        api_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
+        msg: "Host {{ ansible_hostname }} requires a reboot."
+        title: "Reboot Required"
+      when: reboot_required_file.stat.exists
 
 - name: Update all packages on Alpine Linux hosts
   hosts: alpine_hosts
