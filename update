@@ -36,8 +36,8 @@
 
 - name: Update local machine
   hosts: local
-  delegate_to; localhost
-  #connection: local
+  delegate_to: localhost
+  # connection: local
   become: true # Needed for administrative privileges (sudo)
   tasks:
     - name: Install all available updates on localhost
