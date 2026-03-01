@@ -1,4 +1,3 @@
-
 ---
 - name: Update all packages on Debian/Ubuntu hosts
   hosts: debian_hosts
