@@ -35,8 +35,8 @@
       when: kernel_update_check.rc == 0
 
 - name: Update local machine
-  hosts: localhost
-  # connection: local
+  hosts: local
+  connection: local
   become: true # Needed for administrative privileges (sudo)
   tasks:
     - name: Install all available updates on localhost
