@@ -36,7 +36,7 @@
 
 - name: Update local machine
   hosts: localhost
-  connection: local
+  # connection: local
   become: true # Needed for administrative privileges (sudo)
   tasks:
     - name: Install all available updates on localhost
