@@ -15,7 +15,7 @@
     - name: Send Pushover notification
       community.general.pushover:
         user_key: 'abttthxtsupgm6ts2hh8ia7j114dpr'
-        api_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
+        app_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
         msg: "Host {{ ansible_hostname }} requires a reboot."
         title: "Reboot Required"
       when: reboot_required_file.stat.exists
@@ -38,7 +38,7 @@
     - name: Send Pushover notification
       community.general.pushover:
         user_key: 'abttthxtsupgm6ts2hh8ia7j114dpr'
-        api_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
+        app_token: 'uwachpdmhh1xvpbp39pebv6jzvbxes'
         msg: "Host {{ ansible_hostname }} requires a reboot."
         title: "Reboot Required"
       when: kernel_update_check.rc == 0
